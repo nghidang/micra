@@ -10,6 +10,7 @@
     "lint": "eslint \"src/**/*.ts\""
   },
   "dependencies": {
+    "@capacitor/core": "^8.5.0",
     "@ionic/react": "^9.0.0",
     "@ionic/react-router": "^9.0.0",
     "@repo/ui": "workspace:*",
@@ -19,6 +20,7 @@
     "react-router-dom": "^6.30.6"
   },
   "devDependencies": {
+    "@capacitor/cli": "^8.5.0",
     "@repo/eslint-config": "workspace:*",
     "@repo/typescript-config": "workspace:*",
     "@types/react": "^19.0.1",
