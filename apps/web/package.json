@@ -18,6 +18,7 @@
     "@capacitor/status-bar": "^8.0.3",
     "@ionic/react": "^9.0.0",
     "@ionic/react-router": "^9.0.0",
+    "@repo/mfe-users": "workspace:^",
     "@repo/ui": "workspace:*",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",

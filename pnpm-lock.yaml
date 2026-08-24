@@ -41,6 +41,9 @@ importers:
       '@ionic/react-router':
         specifier: ^9.0.0
         version: 9.0.0(@stencil/core@4.44.1)(@types/react@19.1.0)(react-dom@18.3.1)(react-router-dom@6.30.6)(react-router@6.30.6)(react@18.3.1)
+      '@repo/mfe-users':
+        specifier: workspace:^
+        version: link:../../packages/mfe-users
       '@repo/ui':
         specifier: workspace:*
         version: link:../../packages/ui
@@ -96,6 +99,31 @@ importers:
       eslint-config-prettier:
         specifier: ^9.1.0
         version: 9.1.0(eslint@8.57.1)
+
+  packages/mfe-users:
+    dependencies:
+      '@ionic/react':
+        specifier: ^9.0.0
+        version: 9.0.0(@stencil/core@4.44.1)(@types/react@19.1.0)(react-dom@18.3.1)(react@18.3.1)
+      react:
+        specifier: ^18.3.1
+        version: 18.3.1
+      react-dom:
+        specifier: ^18.3.1
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@repo/typescript-config':
+        specifier: workspace:^
+        version: link:../typescript-config
+      '@types/react':
+        specifier: ^19.0.1
+        version: 19.1.0
+      '@types/react-dom':
+        specifier: ^19.0.2
+        version: 19.1.1(@types/react@19.1.0)
+      typescript:
+        specifier: 5.5.4
+        version: 5.5.4
 
   packages/typescript-config: {}
 
@@ -2169,6 +2197,7 @@ packages:
 
   /loose-envify@1.4.0:
     resolution: {integrity: sha512-lyuxPGr/Wfhrlem2CL/UcnUc1zcqKAImBDzukY7Y5F/yQiNdko6+fRLevlw1HgMySw7f611UIY408EtxRSoK3Q==}
+    hasBin: true
     dependencies:
       js-tokens: 4.0.0
     dev: false
@@ -2728,6 +2757,7 @@ packages:
   /typescript@5.5.4:
     resolution: {integrity: sha512-Mtq29sKDAEYP7aljRgtPOpTvOfbwRWlS6dPRzwjdE+C0R4brX/GUyhHSecbHMFLNBLcJIPt9nl9yG5TZ1weH+Q==}
     engines: {node: '>=14.17'}
+    hasBin: true
 
   /undici-types@8.3.0:
     resolution: {integrity: sha512-j375ScV60dom+YkPFIfTLcOiPxkN/buHz5GobjLhixFuANaNs3C9l4GmrWqejgXWJ7BbJcFYpTEUkS1Ge8bpZQ==}
