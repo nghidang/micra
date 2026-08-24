@@ -1,0 +1,14 @@
+export const en = {
+  title: 'Users',
+  filterShow: 'Show filter',
+  filterHide: 'Hide filter',
+  added: '✅ User added',
+  errors: {
+    NAME_REQUIRED: 'Name is required',
+    EMAIL_INVALID: 'Invalid email',
+    NOT_FOUND: 'Not found',
+    CONFLICT: 'Duplicate data',
+    NETWORK: 'Network error, please retry',
+    UNKNOWN: 'Something went wrong',
+  },
+};
