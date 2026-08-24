@@ -20,8 +20,10 @@
     "@ionic/react-router": "^9.0.0",
     "@repo/mfe-users": "workspace:^",
     "@repo/ui": "workspace:*",
+    "i18next": "^26.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^17.0.12",
     "react-router": "^6.30.6",
     "react-router-dom": "^6.30.6"
   },
