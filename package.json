@@ -5,7 +5,9 @@
     "dev": "turbo run dev",
     "lint": "turbo run lint",
     "check-types": "turbo run check-types",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "format": "prettier --write \"**/*.{ts,tsx,md}\"",
+    "dep:check": "depcruise packages --config .dependency-cruiser.cjs",
+    "dep:graph": "depcruise packages/mfe-users/src --config .dependency-cruiser.cjs --output-type dot | dot -T svg > architecture.svg"
   },
   "devDependencies": {
     "dependency-cruiser": "^18.2.0",
