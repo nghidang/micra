@@ -1,2 +1,2 @@
-export { UsersPage } from './presentation/UsersPage';
+export { UsersPage } from './presentation/pages/UsersPage';
 export { UsersProvider } from './bootstrap/UsersProvider';

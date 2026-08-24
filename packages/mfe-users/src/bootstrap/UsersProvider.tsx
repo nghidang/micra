@@ -1,10 +1,15 @@
 import type { ReactNode } from 'react';
-import { InMemoryUserAdapter } from '../infra/in-memory-user.adapter';
-import { GetUsersUsecase } from '../application/get-users.usecase';
-import { UsersUsecaseProvider } from '../application/users.context';
+import { HttpUserAdapter } from '../infra/adapters/user.http.adapter';
+import { GetUsersUsecase } from '../application/usecases/get-users.usecase';
+import { CreateUserUsecase } from '../application/usecases/create-user.usecase';
+import { createUsersDataStore, UsersDataStoreProvider } from '../application/stores/data/users.store';
 
-const usecase = new GetUsersUsecase(new InMemoryUserAdapter());
+const adapter = new HttpUserAdapter();
+const usersDataStore = createUsersDataStore({
+  getUsers: new GetUsersUsecase(adapter),
+  createUser: new CreateUserUsecase(adapter),
+});
 
 export const UsersProvider = ({ children }: { children: ReactNode }) => (
-  <UsersUsecaseProvider value={usecase}>{children}</UsersUsecaseProvider>
+  <UsersDataStoreProvider value={usersDataStore}>{children}</UsersDataStoreProvider>
 );
