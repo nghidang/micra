@@ -9,7 +9,8 @@
   },
   "license": "MIT",
   "scripts": {
-    "lint": "eslint \"**/*.ts\""
+    "lint": "eslint \"**/*.ts\"",
+    "check-types": "tsc --noEmit"
   },
   "dependencies": {
     "react": "^18.2.0",
