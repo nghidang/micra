@@ -8,6 +8,33 @@ module.exports = {
       from: {},
       to: { circular: true }
     },
+    {
+      name: 'no-orphans',
+      comment: 'File mồ côi: không ai import VÀ không import ai',
+      severity: 'error',
+      from: {
+        orphan: true,
+        pathNot: [
+          '\\.d\\.ts$',
+          '(^|/)(vite|vitest)\\.config\\.[jt]s$',
+          '\\.eslintrc\\.cjs$',
+          '(^|/)eslint-config/',
+          '(^|/)index\\.ts$' // barrel/entry, tránh báo nhầm
+        ]
+      },
+      to: {}
+    },
+    {
+      name: 'no-dead-code',
+      comment: 'File không reach được từ index.ts (dead code)',
+      severity: 'error',
+      from: { path: 'packages/mfe-users/src/index\\.ts$' },
+      to: {
+        path: 'packages/mfe-users/src',
+        pathNot: '\\.(test|spec)\\.tsx?$',
+        reachable: false
+      }
+    },
 
     // --- Sơ đồ: hướng phụ thuộc 4 tầng ---
     {
@@ -51,6 +78,13 @@ module.exports = {
       severity: 'error',
       from: { path: 'packages/[^/]+/src/infra' },
       to:   { path: 'node_modules/(react|react-dom|@ionic)/' }
+    },
+    {
+      name: 'infra-service-khong-nguoc',
+      comment: 'services là lớp HTTP thuần; chỉ adapters → services, không ngược lại',
+      severity: 'error',
+      from: { path: 'packages/mfe-users/src/infra/services' },
+      to:   { path: 'packages/mfe-users/src/infra/adapters' },
     },
     {
       name: 'presentation-khong-dung-infra',
