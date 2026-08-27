@@ -8,14 +8,23 @@ const MOCK: UserDTO[] = [
   { id: 3, name: 'Chi Le', email: 'chi@micra.app', username: 'chi' },
 ];
 
-export class InMemoryUserAdapter implements UserRepository {
-  async getAll(): Promise<UserDTO[]> {
-    await new Promise((r) => setTimeout(r, 300));
-    return [...MOCK];
-  }
-  async create(input: CreateUserInput): Promise<UserDTO> {
-    const dto: UserDTO = { id: MOCK.length + 1, name: input.name, email: input.email, username: input.name.toLowerCase() };
-    MOCK.push(dto);
-    return dto;
-  }
-}
+export const createInMemoryUserAdapter = (): UserRepository => {
+  const users: UserDTO[] = [...MOCK]; // state riêng mỗi instance
+
+  return {
+    async getAll() {
+      await new Promise((r) => setTimeout(r, 300));
+      return [...users];
+    },
+    async create(input: CreateUserInput) {
+      const dto: UserDTO = {
+        id: users.length + 1,
+        name: input.name,
+        email: input.email,
+        username: input.name.toLowerCase()
+      };
+      users.push(dto);
+      return dto;
+    }
+  };
+};

@@ -1,40 +1,30 @@
 import type { UserRepository } from '../../domain/interfaces/user.repository';
-import type { UserDTO } from '../../domain/dtos/user.dto';
 import type { CreateUserInput } from '../../domain/dtos/create-user.dto';
 import { AppError } from '../../domain/errors/app-error';
+import { HttpError, type UserApiService } from '../services/user-api.service';
 
-export class HttpUserAdapter implements UserRepository {
-  constructor(
-    private readonly baseUrl = 'https://jsonplaceholder.typicode.com',
-    private readonly onAuthError?: () => void, // shell inject: redirect login
-  ) {}
+const toAppError = (e: unknown): AppError => {
+  if (e instanceof HttpError) {
+    if (e.status === 404) return new AppError('NOT_FOUND');
+    if (e.status === 409) return new AppError('CONFLICT');
+    return new AppError('UNKNOWN');
+  }
+  return new AppError('NETWORK'); // fetch reject = lỗi mạng
+};
 
-  private async request<T>(path: string, init?: RequestInit): Promise<T> {
-    let res: Response;
+export const createUserHttpAdapter = (service: UserApiService): UserRepository => ({
+  async getAll() {
     try {
-      res = await fetch(`${this.baseUrl}${path}`, init);
-    } catch {
-      throw new AppError('NETWORK');           // lỗi mạng
+      return await service.fetchUsers();
+    } catch (e) {
+      throw toAppError(e);
     }
-    if (res.status === 401 || res.status === 403) {
-      this.onAuthError?.();                     // Auth: INFRA tự xử, KHÔNG ném nghiệp vụ lên usecase
-      throw new AppError('UNKNOWN');
+  },
+  async create(input: CreateUserInput) {
+    try {
+      return await service.postUser(input);
+    } catch (e) {
+      throw toAppError(e);
     }
-    if (!res.ok) {
-      // Lỗi nghiệp vụ → ép sang Domain Error Format
-      throw new AppError(res.status === 404 ? 'NOT_FOUND' : res.status === 409 ? 'CONFLICT' : 'UNKNOWN');
-    }
-    return (await res.json()) as T;
   }
-
-  getAll(): Promise<UserDTO[]> {
-    return this.request<UserDTO[]>('/users');
-  }
-  create(input: CreateUserInput): Promise<UserDTO> {
-    return this.request<UserDTO>('/users', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(input),
-    });
-  }
-}
+});
