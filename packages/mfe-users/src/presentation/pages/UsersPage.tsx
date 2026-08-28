@@ -1,11 +1,12 @@
-import { useState } from 'react';
 import { IonButton, IonSpinner, IonText, IonToast } from '@ionic/react';
+import { useState } from 'react';
 import { useTranslation } from 'react-i18next';
-import { useUsersQuery, useCreateUser } from '../hooks/use-users';
+
 import { useUsersUiStore } from '../../application/stores/ui/users-ui.store';
-import { UsersTemplate } from '../templates/UsersTemplate';
-import { UserListOrganism } from '../organisms/UserListOrganism';
+import { useUsersQuery, useCreateUser } from '../hooks/use-users';
 import { UserFormOrganism } from '../organisms/UserFormOrganism';
+import { UserListOrganism } from '../organisms/UserListOrganism';
+import { UsersTemplate } from '../templates/UsersTemplate';
 
 export function UsersPage() {
   const { t, i18n } = useTranslation('users');
@@ -34,7 +35,11 @@ export function UsersPage() {
       <IonButton onClick={toggleFilter}>{filterOpen ? t('filterHide') : t('filterShow')}</IonButton>
       {filterOpen && <p>Filter panel (UI state — Luồng 3)</p>}
       <UserFormOrganism onSubmit={handleSubmit} />
-      {msg && <IonText><p>{msg}</p></IonText>}
+      {msg && (
+        <IonText>
+          <p>{msg}</p>
+        </IonText>
+      )}
       {loading ? <IonSpinner /> : <UserListOrganism items={items} />}
       <IonToast
         isOpen={!!notification}

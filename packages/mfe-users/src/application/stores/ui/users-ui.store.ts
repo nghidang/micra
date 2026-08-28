@@ -1,4 +1,5 @@
 import { create } from 'zustand';
+
 import type { ErrorCode } from '../../../domain/errors/app-error';
 
 interface UsersUiState {

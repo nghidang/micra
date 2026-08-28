@@ -1,6 +1,10 @@
 import type { UserRepository } from '../../domain/interfaces/user.repository';
 
-export interface UserListItem { id: string; label: string; sub: string; }
+export interface UserListItem {
+  id: string;
+  label: string;
+  sub: string;
+}
 
 export class GetUsersUsecase {
   constructor(private readonly repo: UserRepository) {}

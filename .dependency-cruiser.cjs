@@ -31,7 +31,10 @@ module.exports = {
       from: { path: 'packages/mfe-users/src/index\\.ts$' },
       to: {
         path: 'packages/mfe-users/src',
-        pathNot: '\\.(test|spec)\\.tsx?$',
+        pathNot: [
+          '\\.(test|spec)\\.tsx?$',
+          'packages/mfe-users/src/infra/adapters/in-memory-user\\.adapter\\.ts$'
+        ],
         reachable: false
       }
     },

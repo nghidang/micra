@@ -1,6 +1,6 @@
-import type { UserRepository } from '../../domain/interfaces/user.repository';
 import type { CreateUserInput } from '../../domain/dtos/create-user.dto';
 import { AppError } from '../../domain/errors/app-error';
+import type { UserRepository } from '../../domain/interfaces/user.repository';
 import { HttpError, type UserApiService } from '../services/user-api.service';
 
 const toAppError = (e: unknown): AppError => {
@@ -26,5 +26,5 @@ export const createUserHttpAdapter = (service: UserApiService): UserRepository =
     } catch (e) {
       throw toAppError(e);
     }
-  }
+  },
 });

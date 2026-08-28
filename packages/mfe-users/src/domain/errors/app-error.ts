@@ -1,10 +1,19 @@
 export type ErrorCode =
-  | 'NAME_REQUIRED' | 'EMAIL_INVALID'   // validation
-  | 'NOT_FOUND' | 'CONFLICT'            // nghiệp vụ
-  | 'NETWORK' | 'UNKNOWN';              // hạ tầng
+  // validation
+  | 'NAME_REQUIRED'
+  | 'EMAIL_INVALID'
+  // nghiệp vụ
+  | 'NOT_FOUND'
+  | 'CONFLICT'
+  // hạ tầng
+  | 'NETWORK'
+  | 'UNKNOWN';
 
 export class AppError extends Error {
-  constructor(public readonly code: ErrorCode, message?: string) {
+  constructor(
+    public readonly code: ErrorCode,
+    message?: string,
+  ) {
     super(message ?? code);
     this.name = 'AppError';
   }

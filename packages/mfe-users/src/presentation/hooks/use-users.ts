@@ -1,4 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+
 import { useUsersUsecases } from '../../application/di/users-usecases.context';
 import { useUsersUiStore } from '../../application/stores/ui/users-ui.store';
 import type { CreateUserInput } from '../../domain/dtos/create-user.dto';
@@ -10,7 +11,7 @@ export function useUsersQuery() {
   const { getUsers } = useUsersUsecases();
   return useQuery({
     queryKey: USERS_KEY,
-    queryFn: () => getUsers.execute(),   // trả UserListItem[] (VM)
+    queryFn: () => getUsers.execute(), // trả UserListItem[] (VM)
   });
 }
 

@@ -1,5 +1,5 @@
-import type { UserDTO } from '../../domain/dtos/user.dto';
 import type { CreateUserInput } from '../../domain/dtos/create-user.dto';
+import type { UserDTO } from '../../domain/dtos/user.dto';
 
 export class HttpError extends Error {
   constructor(public readonly status: number) {
@@ -40,9 +40,9 @@ export const createUserApiService = (config: UserApiServiceConfig = {}): UserApi
       const res = await request('/users', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(input)
+        body: JSON.stringify(input),
       });
       return res.json() as Promise<UserDTO>;
-    }
+    },
   };
 };

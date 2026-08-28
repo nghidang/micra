@@ -1,5 +1,6 @@
-import { createRoot } from "react-dom/client";
-import "./i18n";
-import App from "./App";
+import { createRoot } from 'react-dom/client';
 
-createRoot(document.getElementById("app")!).render(<App />);
+import './i18n';
+import App from './App';
+
+createRoot(document.getElementById('app')!).render(<App />);

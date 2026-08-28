@@ -1,10 +1,11 @@
-import { useState, type ReactNode } from 'react';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { createUserApiService } from '../infra/services/user-api.service';
-import { createUserHttpAdapter } from '../infra/adapters/user.http.adapter';
-import { GetUsersUsecase } from '../application/usecases/get-users.usecase';
-import { CreateUserUsecase } from '../application/usecases/create-user.usecase';
+import { useState, type ReactNode } from 'react';
+
 import { UsersUsecasesProvider } from '../application/di/users-usecases.context';
+import { CreateUserUsecase } from '../application/usecases/create-user.usecase';
+import { GetUsersUsecase } from '../application/usecases/get-users.usecase';
+import { createUserHttpAdapter } from '../infra/adapters/user.http.adapter';
+import { createUserApiService } from '../infra/services/user-api.service';
 
 interface UsersProviderProps {
   children: ReactNode;
@@ -15,15 +16,15 @@ export const UsersProvider = ({ children }: UsersProviderProps) => {
     const service = createUserApiService({
       onAuthError: () => {
         /* redirect login */
-      }
+      },
     });
     const adapter = createUserHttpAdapter(service);
     return {
       qc: new QueryClient(),
       usecases: {
         getUsers: new GetUsersUsecase(adapter),
-        createUser: new CreateUserUsecase(adapter)
-      }
+        createUser: new CreateUserUsecase(adapter),
+      },
     };
   });
 

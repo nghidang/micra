@@ -1,6 +1,6 @@
-import type { UserRepository } from '../../domain/interfaces/user.repository';
-import type { UserDTO } from '../../domain/dtos/user.dto';
 import type { CreateUserInput } from '../../domain/dtos/create-user.dto';
+import type { UserDTO } from '../../domain/dtos/user.dto';
+import type { UserRepository } from '../../domain/interfaces/user.repository';
 
 const MOCK: UserDTO[] = [
   { id: 1, name: 'Ann Nguyen', email: 'ann@micra.app', username: 'ann' },
@@ -21,10 +21,10 @@ export const createInMemoryUserAdapter = (): UserRepository => {
         id: users.length + 1,
         name: input.name,
         email: input.email,
-        username: input.name.toLowerCase()
+        username: input.name.toLowerCase(),
       };
       users.push(dto);
       return dto;
-    }
+    },
   };
 };

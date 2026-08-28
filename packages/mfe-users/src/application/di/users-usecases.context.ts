@@ -1,6 +1,7 @@
 import { createContext, useContext } from 'react';
-import type { GetUsersUsecase } from '../usecases/get-users.usecase';
+
 import type { CreateUserUsecase } from '../usecases/create-user.usecase';
+import type { GetUsersUsecase } from '../usecases/get-users.usecase';
 
 export interface UsersUsecases {
   getUsers: GetUsersUsecase;

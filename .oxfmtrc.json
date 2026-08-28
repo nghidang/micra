@@ -1,0 +1,33 @@
+{
+  "$schema": "./node_modules/oxfmt/configuration_schema.json",
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "semi": true,
+  "singleQuote": true,
+  "jsxSingleQuote": false,
+  "quoteProps": "as-needed",
+  "trailingComma": "all",
+  "bracketSpacing": true,
+  "bracketSameLine": false,
+  "arrowParens": "always",
+  "endOfLine": "lf",
+  "sortImports": true,
+  "ignorePatterns": [
+    // Build output (chứa JS đã emit — đừng format)
+    "**/dist/**",
+    "**/build/**",
+    // Cache & coverage
+    "**/.turbo/**",
+    "**/coverage/**",
+    // Dependencies (thường mặc định đã bỏ, khai cho chắc)
+    "**/node_modules/**",
+    // Native của Capacitor (web assets copy + config sinh ra)
+    "ios/**",
+    "android/**",
+    // Config bạn canh lề thủ công — GIỮ nguyên, đừng để oxfmt phá
+    ".dependency-cruiser.cjs",
+    // Code sinh tự động (khi có codegen OpenAPI sau này)
+    "**/*.gen.ts"
+  ]
+}

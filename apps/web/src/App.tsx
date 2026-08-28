@@ -1,7 +1,8 @@
-import { Navigate, Route } from 'react-router-dom';
 import { IonApp, IonRouterOutlet, setupIonicReact } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 import { UsersPage, UsersProvider } from '@repo/mfe-users';
+import { Navigate, Route } from 'react-router-dom';
+
 import Home from './pages/Home';
 
 import '@ionic/react/css/core.css';
@@ -18,7 +19,14 @@ const App = () => (
     <IonReactRouter>
       <IonRouterOutlet>
         <Route path="/home" element={<Home />} />
-        <Route path="/users" element={<UsersProvider><UsersPage /></UsersProvider>} />
+        <Route
+          path="/users"
+          element={
+            <UsersProvider>
+              <UsersPage />
+            </UsersProvider>
+          }
+        />
         <Route path="/" element={<Navigate to="/home" replace />} />
       </IonRouterOutlet>
     </IonReactRouter>

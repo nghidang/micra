@@ -1,0 +1,162 @@
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "rules": {
+    "no-inline-comments": "warn"
+  },
+  "overrides": [
+    {
+      "files": ["packages/*/src/domain/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "**/application/**",
+                  "**/infra/**",
+                  "**/presentation/**",
+                  "**/bootstrap/**"
+                ],
+                "message": "DOMAIN không phụ thuộc tầng khác"
+              },
+              {
+                "group": ["react", "react-dom", "@ionic/*", "zustand"],
+                "message": "DOMAIN thuần TS — không import lib UI/state"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/*/src/infra/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/application/**", "**/presentation/**", "**/bootstrap/**"],
+                "message": "INFRA chỉ đi tới DOMAIN"
+              },
+              {
+                "group": ["react", "react-dom", "@ionic/*"],
+                "message": "INFRA headless — không dính UI"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/*/src/application/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/infra/**", "**/presentation/**", "**/bootstrap/**"],
+                "message": "APPLICATION chỉ đi tới DOMAIN"
+              },
+              { "group": ["@ionic/*"], "message": "APPLICATION không import UI (@ionic)" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/*/src/application/stores/ui/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/infra/**", "**/presentation/**", "**/bootstrap/**"],
+                "message": "APPLICATION chỉ đi tới DOMAIN"
+              },
+              { "group": ["@ionic/*"], "message": "APPLICATION không import UI (@ionic)" },
+              { "group": ["**/stores/data/**"], "message": "Luồng 3: UI Store ⟂ Data Store" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/*/src/application/stores/data/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/infra/**", "**/presentation/**", "**/bootstrap/**"],
+                "message": "APPLICATION chỉ đi tới DOMAIN"
+              },
+              { "group": ["@ionic/*"], "message": "APPLICATION không import UI (@ionic)" },
+              { "group": ["**/stores/ui/**"], "message": "Luồng 3: Data Store ⟂ UI Store" }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/*/src/presentation/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/infra/**", "**/bootstrap/**"],
+                "message": "PRESENTATION chỉ qua APPLICATION"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/*/src/presentation/organisms/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/infra/**", "**/bootstrap/**"],
+                "message": "PRESENTATION chỉ qua APPLICATION"
+              },
+              {
+                "group": ["**/presentation/pages/**", "**/presentation/templates/**"],
+                "message": "Luồng 5: organisms không import ngược pages/templates"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["packages/*/src/presentation/templates/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": ["**/infra/**", "**/bootstrap/**"],
+                "message": "PRESENTATION chỉ qua APPLICATION"
+              },
+              {
+                "group": ["**/presentation/pages/**"],
+                "message": "Luồng 5: templates không import pages"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}
