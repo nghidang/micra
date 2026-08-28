@@ -1,33 +1,29 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { IonButton, IonSpinner, IonText, IonToast } from '@ionic/react';
 import { useTranslation } from 'react-i18next';
-import { useUsersDataStore } from '../../application/stores/data/users.store';
+import { useUsersQuery, useCreateUser } from '../hooks/use-users';
 import { useUsersUiStore } from '../../application/stores/ui/users-ui.store';
-import { AppError } from '../../domain/errors/app-error';
 import { UsersTemplate } from '../templates/UsersTemplate';
 import { UserListOrganism } from '../organisms/UserListOrganism';
 import { UserFormOrganism } from '../organisms/UserFormOrganism';
 
 export function UsersPage() {
   const { t, i18n } = useTranslation('users');
-  const store = useUsersDataStore();
-  const { items, loading, load, create } = store();
+
+  // server-state → React Query (tự fetch khi mount, không cần useEffect)
+  const { data: items = [], isLoading: loading } = useUsersQuery();
+  const createUser = useCreateUser();
+
+  // UI-state → Zustand
   const filterOpen = useUsersUiStore((s) => s.filterOpen);
   const toggleFilter = useUsersUiStore((s) => s.toggleFilter);
   const notification = useUsersUiStore((s) => s.notification);
-  const notify = useUsersUiStore((s) => s.notify);
   const clearNotification = useUsersUiStore((s) => s.clearNotification);
   const [msg, setMsg] = useState<string | null>(null);
 
-  useEffect(() => { void load(); }, [load]);
-
-  const handleSubmit = async (input: { name: string; email: string }) => {
-    try {
-      await create(input);
-      setMsg(t('added'));
-    } catch (e) {
-      notify(e instanceof AppError ? e.code : 'UNKNOWN'); // ErrorCode → UI Store
-    }
+  const handleSubmit = (input: { name: string; email: string }) => {
+    createUser.mutate(input, { onSuccess: () => setMsg(t('added')) });
+    // lỗi → hook useCreateUser tự notify (UI Store) → toast hiện
   };
 
   const toggleLang = () => i18n.changeLanguage(i18n.language === 'vi' ? 'en' : 'vi');
