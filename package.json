@@ -1,17 +1,25 @@
 {
+  "name": "with-vite-react",
   "private": true,
   "scripts": {
     "build": "turbo run build",
     "dev": "turbo run dev",
-    "lint": "turbo run lint",
     "check-types": "turbo run check-types",
-    "format": "prettier --write \"**/*.{ts,tsx,md}\""
+    "lint": "oxlint",
+    "format": "oxfmt",
+    "format:check": "oxfmt --check"
   },
   "devDependencies": {
-    "eslint": "^8.57.0",
-    "prettier": "^3.2.5",
+    "lint-staged": "^17.4.1",
+    "oxfmt": "^0.65.0",
+    "oxlint": "^1.80.0",
     "turbo": "^2.10.11"
   },
-  "packageManager": "pnpm@8.15.6",
-  "name": "with-vite-react"
+  "lint-staged": {
+    "*.{ts,tsx,js,jsx,cjs}": [
+      "oxfmt",
+      "oxlint"
+    ]
+  },
+  "packageManager": "pnpm@8.15.6"
 }
