@@ -3,6 +3,7 @@ import { IonReactRouter } from '@ionic/react-router';
 import { UsersPage, UsersProvider } from '@repo/mfe-users';
 import { Navigate, Route } from 'react-router-dom';
 
+import i18n from './i18n';
 import Home from './pages/Home';
 
 import '@ionic/react/css/core.css';
@@ -22,7 +23,7 @@ const App = () => (
         <Route
           path="/users"
           element={
-            <UsersProvider>
+            <UsersProvider i18n={i18n}>
               <UsersPage />
             </UsersProvider>
           }
