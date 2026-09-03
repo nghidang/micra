@@ -7,8 +7,8 @@ export class CreateUserUsecase {
   constructor(private readonly repo: UserRepository) {}
 
   async execute(input: CreateUserInput) {
-    const errors = validateCreateUser(input); // Rules (DOMAIN)
-    if (errors.length) throw new AppError(errors[0]); // ném Domain Error Format
+    const errors = validateCreateUser(input);
+    if (errors.length) throw new AppError(errors[0]);
     return this.repo.create(input);
   }
 }

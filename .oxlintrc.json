@@ -60,7 +60,14 @@
                 "group": ["**/infra/**", "**/presentation/**", "**/bootstrap/**"],
                 "message": "APPLICATION chỉ đi tới DOMAIN"
               },
-              { "group": ["@ionic/*"], "message": "APPLICATION không import UI (@ionic)" }
+              {
+                "group": ["@ionic/*", "react", "react-dom", "@tanstack/react-query"],
+                "message": "APPLICATION framework-free — UI/data-fetching thuộc PRESENTATION"
+              },
+              {
+                "group": ["zustand", "zustand/*"],
+                "message": "Zustand chỉ trong application/stores/ui"
+              }
             ]
           }
         ]
@@ -77,26 +84,10 @@
                 "group": ["**/infra/**", "**/presentation/**", "**/bootstrap/**"],
                 "message": "APPLICATION chỉ đi tới DOMAIN"
               },
-              { "group": ["@ionic/*"], "message": "APPLICATION không import UI (@ionic)" },
-              { "group": ["**/stores/data/**"], "message": "Luồng 3: UI Store ⟂ Data Store" }
-            ]
-          }
-        ]
-      }
-    },
-    {
-      "files": ["packages/*/src/application/stores/data/**"],
-      "rules": {
-        "no-restricted-imports": [
-          "error",
-          {
-            "patterns": [
               {
-                "group": ["**/infra/**", "**/presentation/**", "**/bootstrap/**"],
-                "message": "APPLICATION chỉ đi tới DOMAIN"
-              },
-              { "group": ["@ionic/*"], "message": "APPLICATION không import UI (@ionic)" },
-              { "group": ["**/stores/ui/**"], "message": "Luồng 3: Data Store ⟂ UI Store" }
+                "group": ["@ionic/*", "react", "react-dom", "@tanstack/react-query"],
+                "message": "Store framework-free trừ zustand"
+              }
             ]
           }
         ]

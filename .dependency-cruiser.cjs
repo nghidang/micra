@@ -6,7 +6,7 @@ module.exports = {
       comment: 'Không cho phụ thuộc vòng',
       severity: 'error',
       from: {},
-      to: { circular: true }
+      to: { circular: true },
     },
     {
       name: 'no-orphans',
@@ -19,10 +19,10 @@ module.exports = {
           '(^|/)(vite|vitest)\\.config\\.[jt]s$',
           '\\.eslintrc\\.cjs$',
           '(^|/)eslint-config/',
-          '(^|/)index\\.ts$' // barrel/entry, tránh báo nhầm
-        ]
+          '(^|/)index\\.ts$',
+        ],
       },
-      to: {}
+      to: {},
     },
     {
       name: 'no-dead-code',
@@ -33,10 +33,10 @@ module.exports = {
         path: 'packages/mfe-users/src',
         pathNot: [
           '\\.(test|spec)\\.tsx?$',
-          'packages/mfe-users/src/infra/adapters/in-memory-user\\.adapter\\.ts$'
+          'packages/mfe-users/src/infra/adapters/in-memory-user\\.adapter\\.ts$',
         ],
-        reachable: false
-      }
+        reachable: false,
+      },
     },
 
     // --- Sơ đồ: hướng phụ thuộc 4 tầng ---
@@ -45,56 +45,70 @@ module.exports = {
       comment: 'Sơ đồ: DOMAIN không có mũi tên đi ra',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/domain' },
-      to:   { path: 'packages/[^/]+/src/(application|infra|presentation|bootstrap)' }
+      to: { path: 'packages/[^/]+/src/(application|infra|presentation|bootstrap)' },
     },
     {
       name: 'domain-thuan-ts',
-      comment: 'Clean Arch: DOMAIN (dtos/enums/rules/errors...) thuần TS, không import thư viện ngoài (react, @ionic, zustand...)',
+      comment:
+        'Clean Arch: DOMAIN (dtos/enums/rules/errors...) thuần TS, không import thư viện ngoài (react, @ionic, zustand...)',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/domain' },
-      to:   { dependencyTypes: ['npm', 'npm-dev', 'npm-peer', 'npm-optional'] }
+      to: { dependencyTypes: ['npm', 'npm-dev', 'npm-peer', 'npm-optional'] },
     },
     {
       name: 'application-chi-domain',
-      comment: 'Luồng 1,2,4: APPLICATION chỉ đi tới DOMAIN (Usecase phụ thuộc Interface, không giữ Adapter)',
+      comment:
+        'Luồng 1,2,4: APPLICATION chỉ đi tới DOMAIN (Usecase phụ thuộc Interface, không giữ Adapter)',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/application' },
-      to:   { path: 'packages/[^/]+/src/(infra|presentation|bootstrap)' }
+      to: { path: 'packages/[^/]+/src/(infra|presentation|bootstrap)' },
     },
     {
       name: 'application-khong-ui',
-      comment: 'APPLICATION không được import UI framework (@ionic) — UI thuộc PRESENTATION',
+      comment:
+        'APPLICATION framework-free: không @ionic/react/react-dom/@tanstack (UI & data-fetching thuộc PRESENTATION)',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/application' },
-      to:   { path: 'node_modules/@ionic/' }
+      to: { path: 'node_modules/(@ionic|react|react-dom|@tanstack/react-query)/' },
+    },
+    {
+      name: 'application-zustand-chi-ui-store',
+      comment:
+        'Zustand chỉ ở application/stores/ui (client/UI-state). Server-state dùng TanStack Query — KHÔNG tạo zustand data store.',
+      severity: 'error',
+      from: {
+        path: 'packages/[^/]+/src/application',
+        pathNot: 'packages/[^/]+/src/application/stores/ui',
+      },
+      to: { path: 'node_modules/zustand' },
     },
     {
       name: 'infra-chi-domain',
       comment: 'Sơ đồ: INFRA chỉ đi tới DOMAIN (map DTO/Error Format của Domain)',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/infra' },
-      to:   { path: 'packages/[^/]+/src/(application|presentation|bootstrap)' }
+      to: { path: 'packages/[^/]+/src/(application|presentation|bootstrap)' },
     },
     {
       name: 'infra-khong-ui',
       comment: 'Luồng 6: INFRA là adapter/interceptor headless, không dính react/@ionic',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/infra' },
-      to:   { path: 'node_modules/(react|react-dom|@ionic)/' }
+      to: { path: 'node_modules/(react|react-dom|@ionic)/' },
     },
     {
       name: 'infra-service-khong-nguoc',
       comment: 'services là lớp HTTP thuần; chỉ adapters → services, không ngược lại',
       severity: 'error',
       from: { path: 'packages/mfe-users/src/infra/services' },
-      to:   { path: 'packages/mfe-users/src/infra/adapters' },
+      to: { path: 'packages/mfe-users/src/infra/adapters' },
     },
     {
       name: 'presentation-khong-dung-infra',
       comment: 'Luồng 1,4 (DIP): PRESENTATION chỉ qua APPLICATION, không chạm INFRA/bootstrap',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/presentation' },
-      to:   { path: 'packages/[^/]+/src/(infra|bootstrap)' }
+      to: { path: 'packages/[^/]+/src/(infra|bootstrap)' },
     },
 
     // --- Luồng 5: phân cấp UI chảy xuống (Page → Template → Organisms) ---
@@ -103,34 +117,18 @@ module.exports = {
       comment: 'Luồng 5: organisms không được import pages/templates (chỉ chảy xuống)',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/presentation/organisms' },
-      to:   { path: 'packages/[^/]+/src/presentation/(pages|templates)' }
+      to: { path: 'packages/[^/]+/src/presentation/(pages|templates)' },
     },
     {
       name: 'pres-templates-khong-nguoc',
       comment: 'Luồng 5: templates không được import pages',
       severity: 'error',
       from: { path: 'packages/[^/]+/src/presentation/templates' },
-      to:   { path: 'packages/[^/]+/src/presentation/pages' }
+      to: { path: 'packages/[^/]+/src/presentation/pages' },
     },
-
-    // --- Luồng 3: tách hoàn toàn UI Store và Data Store ---
-    {
-      name: 'store-ui-khong-dung-data',
-      comment: 'Luồng 3: UI Store (modal/tab/filter) tách biệt Data Store',
-      severity: 'error',
-      from: { path: 'packages/[^/]+/src/application/stores/ui' },
-      to:   { path: 'packages/[^/]+/src/application/stores/data' }
-    },
-    {
-      name: 'store-data-khong-dung-ui',
-      comment: 'Luồng 3: Data Store không phụ thuộc UI Store',
-      severity: 'error',
-      from: { path: 'packages/[^/]+/src/application/stores/data' },
-      to:   { path: 'packages/[^/]+/src/application/stores/ui' }
-    }
   ],
   options: {
     doNotFollow: { path: 'node_modules' },
-    tsPreCompilationDeps: true
-  }
+    tsPreCompilationDeps: true,
+  },
 };

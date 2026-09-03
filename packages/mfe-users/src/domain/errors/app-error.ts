@@ -1,13 +1,12 @@
+export type BaseErrorCode =
+  // hạ tầng / transport — generic, mọi feature dùng chung
+  'AUTH' | 'NETWORK' | 'UNKNOWN' | 'NOT_FOUND' | 'CONFLICT';
+
 export type ErrorCode =
-  // validation
+  | BaseErrorCode
+  // validation — riêng feature user
   | 'NAME_REQUIRED'
-  | 'EMAIL_INVALID'
-  // nghiệp vụ
-  | 'NOT_FOUND'
-  | 'CONFLICT'
-  // hạ tầng
-  | 'NETWORK'
-  | 'UNKNOWN';
+  | 'EMAIL_INVALID';
 
 export class AppError extends Error {
   constructor(

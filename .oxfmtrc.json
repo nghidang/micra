@@ -25,8 +25,6 @@
     // Native của Capacitor (web assets copy + config sinh ra)
     "ios/**",
     "android/**",
-    // Config bạn canh lề thủ công — GIỮ nguyên, đừng để oxfmt phá
-    ".dependency-cruiser.cjs",
     // Code sinh tự động (khi có codegen OpenAPI sau này)
     "**/*.gen.ts"
   ]

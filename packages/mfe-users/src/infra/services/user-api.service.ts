@@ -10,7 +10,7 @@ export class HttpError extends Error {
 
 export interface UserApiServiceConfig {
   baseURL?: string;
-  onAuthError?: () => void; // interceptor hạ tầng: 401/403 tự xử lý
+  onAuthError?: () => void;
 }
 
 export interface UserApiService {
@@ -24,7 +24,7 @@ export const createUserApiService = (config: UserApiServiceConfig = {}): UserApi
   const request = async (path: string, init?: RequestInit): Promise<Response> => {
     const res = await fetch(`${baseURL}${path}`, init);
     if (res.status === 401 || res.status === 403) {
-      config.onAuthError?.(); // auth: KHÔNG ném lên usecase
+      config.onAuthError?.();
       throw new HttpError(res.status);
     }
     if (!res.ok) throw new HttpError(res.status);
