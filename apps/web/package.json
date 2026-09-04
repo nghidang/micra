@@ -17,17 +17,21 @@
     "@capacitor/status-bar": "^8.0.3",
     "@ionic/react": "^9.0.0",
     "@ionic/react-router": "^9.0.0",
+    "@repo/mfe-users": "workspace:^",
     "@repo/ui": "workspace:*",
+    "@tanstack/react-query": "^5.102.7",
+    "i18next": "^26.4.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
+    "react-i18next": "^17.0.12",
     "react-router": "^6.30.6",
     "react-router-dom": "^6.30.6"
   },
   "devDependencies": {
     "@capacitor/cli": "^8.5.0",
     "@repo/typescript-config": "workspace:*",
-    "@types/react": "^19.0.1",
-    "@types/react-dom": "^19.0.2",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
     "@vitejs/plugin-react": "^5.1.4",
     "typescript": "5.5.4",
     "vite": "^5.1.4"
